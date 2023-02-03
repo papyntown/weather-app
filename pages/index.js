@@ -4,43 +4,34 @@ import React, { useEffect, useState } from "react";
 
 const index = () => {
     const [inputValue, setInputValue] = useState("Perpignan");
-    const [latitude, setLatitudeValue] = useState();
-    const [longitude, setLongitudeValue] = useState();
-    const [inputValuenow, setInputValuenow] = useState("");
     const [weatherData, setWeatherData] = useState();
 
-    const gps = async () => {
-        console.log("T'es passez dedans");
+    async function getData() {
+        console.log(inputValue);
         await axios
             .get(
-                `https://api.openweathermap.org/geo/1.0/direct?q=${inputValue}&limit=1&appid=812a258460a7833e26564ccf4c70473b`
+                `https://api.openweathermap.org/data/2.5/forecast?q=${inputValue}&appid=812a258460a7833e26564ccf4c70473b&units=metric`
             )
-            .then((res) => {
-                setLatitudeValue(parseFloat(res.data[0].lat.toFixed(2)));
-                setLongitudeValue(parseFloat(res.data[0].lon.toFixed(2)));
-
-                axios
-                    .get(
-                        `https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid=812a258460a7833e26564ccf4c70473b&units=metric`
-                    )
-                    .then((res) => {
-                        setWeatherData(res.data);
-                        console.log(latitude);
-                    });
+            .then((response) => {
+                setWeatherData(response.data);
+                console.log(response.data);
             });
-    };
+    }
+
     useEffect(() => {
-        gps();
+        getData();
     }, []);
+    const handleSubmit = (e) => {
+        e.preventDefault(e);
+    };
     return (
         <div className="mx-32 text-center rounded-lg border-double border-2 border-indigo-600">
-            <header>{`Voici ta longitude : ${longitude} et ta latitude: ${latitude}`}</header>
+            <header></header>
             <div className="city-input">
                 <form
                     onSubmit={(e) => {
-                        e.preventDefault();
-                        setInputValue(inputValuenow);
-                        gps();
+                        handleSubmit(e);
+                        getData();
                     }}>
                     <div className="search-container">
                         <input
@@ -48,14 +39,14 @@ const index = () => {
                             placeholder={"Ex : Perpignan"}
                             id="search"
                             onChange={(e) => {
-                                setInputValuenow(e.target.value);
+                                setInputValue(e.target.value);
                             }}
                         />
                         <input type="submit" value="Rechercher" id="submit" />
                     </div>
                 </form>
             </div>
-            <h1>{weatherData ? weatherData.name : "pas de data"}</h1>
+            <h1>{weatherData ? weatherData.city.name : "pas de data"}</h1>
             <Card />
         </div>
     );
