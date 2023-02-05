@@ -7,6 +7,9 @@ body{color: whitesmoke;}
 ul{
     list-style: none;
 }
+.title{
+    transform: translate(-15%, -15%)
+}
 
 .background {
     position: fixed;

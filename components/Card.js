@@ -40,12 +40,18 @@ const Card = ({ meteo }) => {
                         meteo.weather[0].description.slice(1)}
                 </h3>
             </div>
-            <div className="value w-4/5 mx-auto pt-4 pb-1 flex justify-between items-center ">
-                <div className="date ">
-                    <h4>{`${dayOfWeek} à ${hours}H${
+            <div className="value w-4/5 mx-auto pt-4 pb-4 flex justify-between items-center ">
+                <div className="date max-w-20 ">
+                    <h4>{`${dayOfWeek} à ${hours < 10 ? "0" + hours : hours}H${
                         minutes < 10 ? "0" + minutes : minutes
                     }`}</h4>
                 </div>
+                {/* Barre entre la date et détail */}
+                {/* <div className="relative">
+                    <div className="  h-14"></div>
+                    <div className="absolute inset-0 bg-slate-400 h-15  w-px left-5"></div>
+                </div> */}
+
                 <div className="detail">
                     <ul>
                         <li className=" text-xs font-light">

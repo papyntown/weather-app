@@ -4,13 +4,13 @@ import axios from "axios";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 
-const index = () => {
+const index = ({ clientweatherDataList, clientweatherData }) => {
     const [inputValue, setInputValue] = useState("Perpignan");
     const [weatherData, setWeatherData] = useState();
     const [weatherDataList, setWeatherDataList] = useState();
     const [language, setLanguage] = useState("fr");
+
     async function getData() {
-        console.log(inputValue);
         await axios
             .get(
                 `https://api.openweathermap.org/data/2.5/forecast?q=${inputValue}&appid=812a258460a7833e26564ccf4c70473b&units=metric&lang=${language}`
@@ -22,18 +22,16 @@ const index = () => {
             });
     }
 
-    useEffect(() => {
-        getData();
-    }, []);
     const handleSubmit = (e) => {
         e.preventDefault(e);
     };
+    console.log(clientweatherData);
     return (
         <div className=" ">
             <Background />
             <div className=" pt-6">
                 <form
-                    className="mx-auto w-4/5 mb-5  flex justify-center align-center lg:justify-between  "
+                    className="mx-auto w-4/5 mb-5  flex items-center justify-center align-center lg:justify-between  "
                     onSubmit={(e) => {
                         handleSubmit(e);
                         getData();
@@ -55,6 +53,7 @@ const index = () => {
                             className="cursor-pointer font-bold py-2 px-4 w-full bg-slate-300 text-black opacity-75 rounded-b-lg hover:bg-slate-700 hover:text-white"
                         />
                     </div>
+
                     <div className="img hidden lg:block ">
                         <Image
                             src={"/weather-icon.png"}
@@ -64,15 +63,20 @@ const index = () => {
                         />
                     </div>
                 </form>
-                <h1 className="city text-center  mx-auto  w-2/6 rounded-lg text-#ff6a46 bg-blue-900">
-                    {weatherData ? weatherData.city.name : "pas de data"}
+                <h1 className="city text-center  mx-auto  w-4/6 rounded-lg text-#ff6a46 bg-violet-800 lg:w-2/6">
+                    {weatherData && clientweatherData
+                        ? weatherData.city.name
+                        : clientweatherData.city.name}
                 </h1>
 
                 <div className="contain-data mx-auto  w-11/12 grid grid-cols-1 sm:grid-cols-2  lg:grid-cols-3 xl:grid-cols-4 lg:max-w-8xl   gap-y-10 gap-x-8 px-4 py-8 ">
-                    {weatherDataList &&
-                        weatherDataList.map((meteo) => {
-                            return <Card key={meteo.dt} meteo={meteo} />;
-                        })}
+                    {weatherDataList && clientweatherDataList
+                        ? weatherDataList.map((meteo) => {
+                              return <Card key={meteo.dt} meteo={meteo} />;
+                          })
+                        : clientweatherDataList.map((meteo) => {
+                              return <Card key={meteo.dt} meteo={meteo} />;
+                          })}
                 </div>
             </div>
         </div>
@@ -80,16 +84,19 @@ const index = () => {
 };
 
 export default index;
-// export const getStaticProps = async () => {
-//     const res = await fetch(
-//         `https://api.openweathermap.org/geo/1.0/direct?q=Perpignan&limit=5&appid=812a258460a7833e26564ccf4c70473b`
-//     );
-//     const position = await res.json();
-//     /// Les logs tu peux les voir sur ton terminal
-//     //  console.log(articles);
-//     return {
-//         props: {
-//             position: position[0],
-//         },
-//     };
-// };
+export const getStaticProps = async () => {
+    const res = await axios.get(
+        `https://api.openweathermap.org/data/2.5/forecast?q=perpignan&appid=812a258460a7833e26564ccf4c70473b&units=metric&lang=fr`
+    );
+
+    const clientweatherData = await res.data;
+    const clientweatherDataList = await res.data.list;
+    /// Les logs tu peux les voir sur ton terminal
+    //  console.log(articles);
+    return {
+        props: {
+            clientweatherDataList: clientweatherDataList,
+            clientweatherData: clientweatherData,
+        },
+    };
+};
