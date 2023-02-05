@@ -34,12 +34,13 @@ const Card = ({ meteo }) => {
                     <h2>{Math.floor(meteo.main.temp) + "   °C"}</h2>
                 </div>
             </div>
-            <div className="value w-4/5 mx-auto pb-5 ">
+            <div className="weather-description  w-4/5 mx-auto">
                 <h3>
                     {meteo.weather[0].description.charAt(0).toUpperCase() +
                         meteo.weather[0].description.slice(1)}
                 </h3>
-
+            </div>
+            <div className="value w-4/5 mx-auto pt-4 pb-1 flex justify-between items-center ">
                 <div className="date ">
                     <h4>{`${dayOfWeek} à ${hours}H${
                         minutes < 10 ? "0" + minutes : minutes
@@ -47,9 +48,16 @@ const Card = ({ meteo }) => {
                 </div>
                 <div className="detail">
                     <ul>
-                        <li>Temp ressentit:{meteo.main.feels_like}°C</li>
-                        <li>{meteo.main.humidity}</li>
-                        <li>Vent:{meteo.wind.speed} km/h</li>
+                        <li className=" text-xs font-light">
+                            Temp ressentit : {Math.floor(meteo.main.feels_like)}
+                            °C
+                        </li>
+                        <li className="text-xs font-light">
+                            Humidité : {meteo.main.humidity}%
+                        </li>
+                        <li className="text-xs font-light">
+                            Vent : {meteo.wind.speed} km/h
+                        </li>
                     </ul>
                 </div>
             </div>

@@ -68,7 +68,7 @@ const index = () => {
                     {weatherData ? weatherData.city.name : "pas de data"}
                 </h1>
 
-                <div className="contain-data mx-auto  w-11/12 grid grid-cols-1 sm:grid-cols-2  lg:grid-cols-3 xl:grid-cols-4 lg:max-w-7xl  gap-y-10 gap-x-8 px-4 py-8 ">
+                <div className="contain-data mx-auto  w-11/12 grid grid-cols-1 sm:grid-cols-2  lg:grid-cols-3 xl:grid-cols-4 lg:max-w-8xl   gap-y-10 gap-x-8 px-4 py-8 ">
                     {weatherDataList &&
                         weatherDataList.map((meteo) => {
                             return <Card key={meteo.dt} meteo={meteo} />;
