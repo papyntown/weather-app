@@ -8,12 +8,12 @@ const index = () => {
     const [inputValue, setInputValue] = useState("Perpignan");
     const [weatherData, setWeatherData] = useState();
     const [weatherDataList, setWeatherDataList] = useState();
-
+    const [language, setLanguage] = useState("fr");
     async function getData() {
         console.log(inputValue);
         await axios
             .get(
-                `https://api.openweathermap.org/data/2.5/forecast?q=${inputValue}&appid=812a258460a7833e26564ccf4c70473b&units=metric`
+                `https://api.openweathermap.org/data/2.5/forecast?q=${inputValue}&appid=812a258460a7833e26564ccf4c70473b&units=metric&lang=${language}`
             )
             .then((response) => {
                 setWeatherData(response.data);
@@ -31,9 +31,9 @@ const index = () => {
     return (
         <div className=" ">
             <Background />
-            <div className="mx-auto w-4/5 pt-6">
+            <div className=" pt-6">
                 <form
-                    className=" mb-5  flex justify-center align-center lg:justify-between  "
+                    className="mx-auto w-4/5 mb-5  flex justify-center align-center lg:justify-between  "
                     onSubmit={(e) => {
                         handleSubmit(e);
                         getData();
@@ -64,11 +64,15 @@ const index = () => {
                         />
                     </div>
                 </form>
-                <div className="">
-                    <h1>
-                        {weatherData ? weatherData.city.name : "pas de data"}
-                    </h1>
-                    <Card />
+                <h1 className="city text-center  mx-auto  w-2/6 rounded-lg text-#ff6a46 bg-blue-900">
+                    {weatherData ? weatherData.city.name : "pas de data"}
+                </h1>
+
+                <div className="contain-data mx-auto  w-11/12 grid grid-cols-1 sm:grid-cols-2  lg:grid-cols-3 xl:grid-cols-4 lg:max-w-7xl  gap-y-10 gap-x-8 px-4 py-8 ">
+                    {weatherDataList &&
+                        weatherDataList.map((meteo) => {
+                            return <Card key={meteo.dt} meteo={meteo} />;
+                        })}
                 </div>
             </div>
         </div>

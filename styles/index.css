@@ -4,6 +4,9 @@
     }
 }
 body{color: whitesmoke;}
+ul{
+    list-style: none;
+}
 
 .background {
     position: fixed;
