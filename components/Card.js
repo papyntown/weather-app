@@ -30,17 +30,17 @@ const Card = ({ meteo }) => {
                         />
                     }
                 </div>
-                <div className="temp pr-5 text-6xl">
+                <div className="temp pr-5 font-medium text-6xl">
                     <h2>{Math.floor(meteo.main.temp) + "   °C"}</h2>
                 </div>
             </div>
-            <div className="weather-description  w-4/5 mx-auto">
+            <div className="weather-description font-semibold text-2xl  w-4/5 mx-auto">
                 <h3>
                     {meteo.weather[0].description.charAt(0).toUpperCase() +
                         meteo.weather[0].description.slice(1)}
                 </h3>
             </div>
-            <div className="value w-4/5 mx-auto pt-4 pb-4 flex justify-between items-center ">
+            <div className="value w-4/5 mx-auto pt-4 pb-4 text-sm  flex justify-between items-center ">
                 <div className="date max-w-20 ">
                     <h4>{`${dayOfWeek} à ${hours < 10 ? "0" + hours : hours}H${
                         minutes < 10 ? "0" + minutes : minutes

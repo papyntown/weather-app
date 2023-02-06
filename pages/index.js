@@ -25,6 +25,7 @@ const index = ({ clientweatherDataList, clientweatherData }) => {
     const handleSubmit = (e) => {
         e.preventDefault(e);
     };
+
     console.log(clientweatherData);
     return (
         <div className=" ">
@@ -63,7 +64,7 @@ const index = ({ clientweatherDataList, clientweatherData }) => {
                         />
                     </div>
                 </form>
-                <h1 className="city text-center  mx-auto  w-4/6 rounded-lg text-#ff6a46 bg-violet-800 lg:w-2/6">
+                <h1 className="city text-center  mx-auto  w-4/6 rounded-lg text-#ff6a46 bg-violet-800 lg:w-2/6 font-mono">
                     {weatherData && clientweatherData
                         ? weatherData.city.name
                         : clientweatherData.city.name}
@@ -84,6 +85,7 @@ const index = ({ clientweatherDataList, clientweatherData }) => {
 };
 
 export default index;
+// Chargée depuis le  serveur
 export const getStaticProps = async () => {
     const res = await axios.get(
         `https://api.openweathermap.org/data/2.5/forecast?q=perpignan&appid=812a258460a7833e26564ccf4c70473b&units=metric&lang=fr`

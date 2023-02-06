@@ -3,7 +3,10 @@
         transform: translate3d(0, 0, 1px) rotate(360deg);
     }
 }
-body{color: whitesmoke;}
+body{
+    color: whitesmoke;
+    
+}
 ul{
     list-style: none;
 }
